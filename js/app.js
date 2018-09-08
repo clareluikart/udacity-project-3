@@ -40,23 +40,23 @@ const Player = function() {
   this.y = 350;
   this.update = function() {
     if (this.y == 18) {
-      if (checker(levels[0])) {
+      if (this.checker(levels[0])) {
         this.x = 200;
         this.y = 350;
       }
     } else if (this.y == 101) {
-      if (checker(levels[1])) {
+      if (this.checker(levels[1])) {
         this.x = 200;
         this.y = 350;
       }
     } else if (this.y == 184) {
-      if (checker(levels[2])) {
+      if (this.checker(levels[2])) {
         this.x = 200;
         this.y = 350;
       }
     } else if (this.y == -65) {
       // Checks if game has been won
-      winFun()
+      this.winFun();
     }
   };
   //render function just like for Enemy prototype
@@ -94,16 +94,23 @@ const Player = function() {
       }
     }
   }
-};
-//checks if any enemies in a given array are touching the player
-const checker = function(array) {
-  for (let i = 0; i < 2; i++) {
-    if ((array[i].x < player.x && array[i].x + 70 > player.x) || (array[i].x < player.x + 83 && array[i].x + 70 > player.x + 83)) {
-      return true;
+  //checks if any enemies in a given array are touching the player
+  this.checker = function(array) {
+    for (let i = 0; i < 2; i++) {
+      if ((array[i].x < this.x && array[i].x + 70 > this.x) || (array[i].x < this.x + 83 && array[i].x + 70 > this.x + 83)) {
+        return true;
+      }
     }
+    return false;
   }
-  return false;
-}
+  // Shows that game has been won, shows modal
+  this.winFun = function() {
+    gameWon = true;
+    document.getElementById('modal').style.display = 'block';
+  }
+};
+
+// tells if game has been won or not
 let gameWon = false;
 // Place all enemy objects in an array called allEnemies
 let allEnemies = [];
@@ -123,11 +130,6 @@ for (let i = 0; i < 3; i++) {
 // Place the player object in a variable called player
 let player = new Player();
 
-// Shows that game has been won.
-const winFun = function() {
-  gameWon = true;
-  document.getElementById('modal').style.display = 'block';
-}
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
