@@ -6,8 +6,11 @@ const Enemy = function(level) {
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
+  // gives Enemy a random speed between a level of 1 and 4
   this.speed = (Math.trunc(Math.random() * 4)) + 1;
+  // puts it on its assigned level
   this.y = 18 + (level) * 83;
+  // starts it somewhere randomly so they don't all come at once
   this.x = -50 * (Math.trunc(Math.random() * 5));
 };
 
@@ -18,7 +21,7 @@ Enemy.prototype.update = function(dt) {
   // which will ensure the game runs at the same speed for
   // all computers.
   if (this.x > 505) {
-    this.x = -100;
+    this.x = -101;
   } else {
     this.x += this.speed * 60 * dt;
   }
@@ -32,45 +35,75 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 const Player = function() {
   this.sprite = 'images/char-boy.png';
+  //starts in the bottom middle space
   this.x = 200;
   this.y = 350;
   this.update = function() {
-
+    if (this.y == 18) {
+      if (checker(levels[0])) {
+        this.x = 200;
+        this.y = 350;
+      }
+    } else if (this.y == 101) {
+      if (checker(levels[1])) {
+        this.x = 200;
+        this.y = 350;
+      }
+    } else if (this.y == 184) {
+      if (checker(levels[2])) {
+        this.x = 200;
+        this.y = 350;
+      }
+    }
   };
+  //render function just like for Enemy prototype
   this.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
+  //takes keycode and checks which direction to move in before updating
+  // x,y coordinates. Also makes sure player can't go off screen.
   this.handleInput = function(keycode) {
     switch (keycode) {
       case 'left':
         if (this.x !== -2) {
           this.x -= 101;
+          console.log(this.x + "," + this.y);
         }
         break;
       case 'right':
         if (this.x !== 402) {
           this.x += 101;
+          console.log(this.x + "," + this.y);
         }
         break;
       case 'up':
         if (this.y !== -65) {
           this.y -= 83;
+          console.log(this.x + "," + this.y);
         }
         break;
       default:
         if (this.y !== 350) {
           this.y += 83;
+          console.log(this.x + "," + this.y);
         }
     }
   }
-  // This class requires an update(), render() and
-  // a handleInput() method.
 };
-
-// Now instantiate your objects.
+//checks if any enemies in a given array are touching the player
+const checker = function(array) {
+  for (let i = 0; i < 2; i++) {
+    if ((array[i].x < player.x && array[i].x + 60 > player.x) || (array[i].x < player.x + 83 && array[i].x + 60 > player.x + 83)) {
+      return true;
+    }
+  }
+  return false;
+}
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 let allEnemies = [];
+// Makes an array that can tell which row each enemy is in,
+// and makes sure there are two enemies per row.
+// Each new Enemy is added to that levels and to allEnemies.
 let levels = [];
 for (let i = 0; i < 3; i++) {
   let levI = [];
@@ -81,6 +114,7 @@ for (let i = 0; i < 3; i++) {
     levI.push(newEnemy);
   }
 }
+// Place the player object in a variable called player
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
