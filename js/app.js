@@ -126,7 +126,7 @@ let player = new Player();
 // Shows that game has been won.
 const winFun = function() {
   gameWon = true;
-  console.log(gameWon);
+  document.getElementById('modal').style.display = 'block';
 }
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
