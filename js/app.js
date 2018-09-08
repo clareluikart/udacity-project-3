@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-const Enemy = function() {
+const Enemy = function(level) {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
 
@@ -7,8 +7,8 @@ const Enemy = function() {
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
   this.speed = (Math.trunc(Math.random() * 4)) + 1;
-  this.y = (Math.trunc(Math.random() * 3)) * 90;
-  this.x = -100 * (Math.trunc(Math.random() * 3));
+  this.y = 18 + (level) * 83;
+  this.x = -50 * (Math.trunc(Math.random() * 5));
 };
 
 // Update the enemy's position, required method for game
@@ -71,8 +71,15 @@ const Player = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-for (let i = 0; i < 7; i++) {
-  allEnemies.push(new Enemy());
+let levels = [];
+for (let i = 0; i < 3; i++) {
+  let levI = [];
+  levels.push(levI);
+  for (let x = 0; x < 2; x++) {
+    let newEnemy = new Enemy(i);
+    allEnemies.push(newEnemy);
+    levI.push(newEnemy);
+  }
 }
 let player = new Player();
 
