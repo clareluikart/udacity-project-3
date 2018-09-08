@@ -40,8 +40,20 @@ const Player = function() {
   this.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
-  this.handleInput = function() {
-
+  this.handleInput = function(keycode) {
+    switch (keycode) {
+      case 'left':
+        this.x -= 101;
+        break;
+      case 'right':
+        this.x += 101;
+        break;
+      case 'up':
+        this.y -= 83;
+        break;
+      default:
+        this.y += 83;
+    }
   }
   // This class requires an update(), render() and
   // a handleInput() method.
