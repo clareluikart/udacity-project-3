@@ -9,9 +9,6 @@ const Enemy = function() {
   this.speed = (Math.trunc(Math.random() * 4)) + 1;
   this.y = (Math.trunc(Math.random() * 3)) * 90;
   this.x = -100 * (Math.trunc(Math.random() * 3));
-  /*  let newEn = document.createElement("img");
-    newEn.src = "images/enemy-bug.png";
-    document.getElementById("pieces").appendChild(newEn); */
 };
 
 // Update the enemy's position, required method for game
@@ -34,13 +31,14 @@ Enemy.prototype.render = function() {
 
 // Now write your own player class
 const Player = function() {
-  this.sprite = 'images/char-princess-girl.png';
-
+  this.sprite = 'images/char-boy.png';
+  this.x = 200;
+  this.y = 350;
   this.update = function() {
 
   };
   this.render = function() {
-
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
   this.handleInput = function() {
 
