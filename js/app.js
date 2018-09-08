@@ -54,6 +54,9 @@ const Player = function() {
         this.x = 200;
         this.y = 350;
       }
+    } else if (this.y == -65) {
+      // Checks if game has been won
+      winFun()
     }
   };
   //render function just like for Enemy prototype
@@ -63,42 +66,45 @@ const Player = function() {
   //takes keycode and checks which direction to move in before updating
   // x,y coordinates. Also makes sure player can't go off screen.
   this.handleInput = function(keycode) {
-    switch (keycode) {
-      case 'left':
-        if (this.x !== -2) {
-          this.x -= 101;
-          console.log(this.x + "," + this.y);
-        }
-        break;
-      case 'right':
-        if (this.x !== 402) {
-          this.x += 101;
-          console.log(this.x + "," + this.y);
-        }
-        break;
-      case 'up':
-        if (this.y !== -65) {
-          this.y -= 83;
-          console.log(this.x + "," + this.y);
-        }
-        break;
-      default:
-        if (this.y !== 350) {
-          this.y += 83;
-          console.log(this.x + "," + this.y);
-        }
+    if (!gameWon) {
+      switch (keycode) {
+        case 'left':
+          if (this.x !== -2) {
+            this.x -= 101;
+            console.log(this.x + "," + this.y);
+          }
+          break;
+        case 'right':
+          if (this.x !== 402) {
+            this.x += 101;
+            console.log(this.x + "," + this.y);
+          }
+          break;
+        case 'up':
+          if (this.y !== -65) {
+            this.y -= 83;
+            console.log(this.x + "," + this.y);
+          }
+          break;
+        default:
+          if (this.y !== 350) {
+            this.y += 83;
+            console.log(this.x + "," + this.y);
+          }
+      }
     }
   }
 };
 //checks if any enemies in a given array are touching the player
 const checker = function(array) {
   for (let i = 0; i < 2; i++) {
-    if ((array[i].x < player.x && array[i].x + 60 > player.x) || (array[i].x < player.x + 83 && array[i].x + 60 > player.x + 83)) {
+    if ((array[i].x < player.x && array[i].x + 70 > player.x) || (array[i].x < player.x + 83 && array[i].x + 70 > player.x + 83)) {
       return true;
     }
   }
   return false;
 }
+let gameWon = false;
 // Place all enemy objects in an array called allEnemies
 let allEnemies = [];
 // Makes an array that can tell which row each enemy is in,
@@ -117,6 +123,11 @@ for (let i = 0; i < 3; i++) {
 // Place the player object in a variable called player
 let player = new Player();
 
+// Shows that game has been won.
+const winFun = function() {
+  gameWon = true;
+  console.log(gameWon);
+}
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
