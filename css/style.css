@@ -2,7 +2,7 @@ body {
   ;
 }
 
-img {
+/* img {
   float: left;
 }
 
@@ -10,3 +10,8 @@ img {
   margin: auto;
   width: 505px;
 }
+
+#pieces {
+  position: relative;
+  z-index: 2;
+} */

@@ -1,4 +1,3 @@
-// blocks are 100x80
 // Enemies our player must avoid
 const Enemy = function() {
   // Variables applied to each of our instances go here,
@@ -7,9 +6,12 @@ const Enemy = function() {
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
-  this.speed = (Math.trunc(Math.random() * 10)) + 1;
-  this.initLoc = Math.trunc(Math.random() * 3)
-  let loc = 0;
+  this.speed = (Math.trunc(Math.random() * 4)) + 1;
+  this.y = (Math.trunc(Math.random() * 3)) * 90;
+  this.x = -100 * (Math.trunc(Math.random() * 3));
+  /*  let newEn = document.createElement("img");
+    newEn.src = "images/enemy-bug.png";
+    document.getElementById("pieces").appendChild(newEn); */
 };
 
 // Update the enemy's position, required method for game
@@ -18,6 +20,11 @@ Enemy.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
+  if (this.x > 505) {
+    this.x = -100;
+  } else {
+    this.x += this.speed * 60 * dt;
+  }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -28,7 +35,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 const Player = function() {
   this.sprite = 'images/char-princess-girl.png';
-  this.initLoc = Math.trunc(Math.random() * 5);
+
   this.update = function() {
 
   };
@@ -46,7 +53,7 @@ const Player = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-for (int i = 0; i < 7; i++) {
+for (let i = 0; i < 7; i++) {
   allEnemies.push(new Enemy());
 }
 let player = new Player();
